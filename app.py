@@ -2,18 +2,73 @@ import streamlit as st
 import pickle
 import numpy as np
 from PIL import Image
-import joblib
+import os
+from sklearn.preprocessing import LabelEncoder
+from tensorflow.keras.preprocessing.image import load_img, img_to_array
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
 
-    
+# Function to fetch data from GitHub repository
+@st.cache
+def get_data():
+    url = 'https://github.com/Sagarnr1997/streamlit-app-for-power-cons-forcasting/raw/master/PJMW_MW_Hourly.xlsx'
+    response = requests.get(url)
+    excel_data = response.content
+    return pd.read_excel(BytesIO(excel_data))
 
-def load_model(filename):
-    try:
-        with open(filename, 'rb') as f:
-            model = pickle.load(f)
-        return model
-    except Exception as e:
-        print("Error loading pickle file:", e)
-        return None
+data = get_data()
+
+# Preprocess images
+data['filename'] = data['filename'].apply(lambda x: os.path.join('C:/Users/nidhi/Desktop/Myntra_cloth_images', x))
+image_data = []
+for filename in data["filename"]:
+    img = load_img(filename, target_size=(224, 224))  # Assuming image size is 224x224
+    img_array = img_to_array(img) / 255.0  # Normalize pixel values
+    image_data.append(img_array)
+
+# Preprocess labels
+label_encoder = LabelEncoder()
+data['gender'] = label_encoder.fit_transform(data['gender'])
+data['sleeve_length'] = label_encoder.fit_transform(data['sleeve_length'])
+
+# Convert data to numpy arrays
+X = np.array(image_data)
+y_gender = np.array(data['gender'])
+y_sleeve_length = np.array(data['sleeve_length'])
+
+model1 = Sequential([
+    Conv2D(32, (3, 3), activation='relu', input_shape=(224, 224, 3)),
+    MaxPooling2D((2, 2)),
+    Conv2D(64, (3, 3), activation='relu'),
+    MaxPooling2D((2, 2)),
+    Conv2D(128, (3, 3), activation='relu'),
+    MaxPooling2D((2, 2)),
+    Flatten(),
+    Dense(128, activation='relu'),
+    Dense(1, activation='softmax'),  # Output for gender (2 classes: male, female)
+    Dense(1, activation='softmax')])
+
+model2 = Sequential([
+    Conv2D(32, (3, 3), activation='relu', input_shape=(224, 224, 3)),
+    MaxPooling2D((2, 2)),
+    Conv2D(64, (3, 3), activation='relu'),
+    MaxPooling2D((2, 2)),
+    Conv2D(128, (3, 3), activation='relu'),
+    MaxPooling2D((2, 2)),
+    Flatten(),
+    Dense(128, activation='relu'),
+    Dense(1, activation='softmax'),  # Output for gender (2 classes: male, female)
+    Dense(1, activation='softmax')
+])
+
+model1.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+model2.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+
+model1=model1.fit(X, y_gender, epochs=10)
+model2=model2.fit(X, y_sleeve_length, epochs=10)
 
 
 # Function to make predictions using the loaded models
@@ -28,9 +83,6 @@ def predict(image, model1, model2):
     
     return gender, sleeve_type
 
-# Load your pickle files
-model1 = joblib.load('model1.pkl')
-model2 = joblib.load('model2.pkl')
 
 # Streamlit UI
 st.title('Image Upload and Prediction')
