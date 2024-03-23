@@ -3,6 +3,7 @@ import pandas as pd
 import pickle
 import numpy as np
 from PIL import Image
+from io import BytesIO
 import os
 from sklearn.preprocessing import LabelEncoder
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
