@@ -4,4 +4,4 @@ numpy
 joblib
 tensorflow
 keras
-sklearn==01 8
+sklearn==30.0.1
