@@ -14,7 +14,7 @@ from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
 # Function to fetch data from GitHub repository
 @st.cache
 def get_data():
-    url = 'https://github.com/Sagarnr1997/streamlit-app-for-power-cons-forcasting/raw/master/PJMW_MW_Hourly.xlsx'
+    url = 'https://raw.githubusercontent.com/Sagarnr1997/myntra_clothes/main/myntra_dataset.csv'
     response = requests.get(url)
     excel_data = response.content
     return pd.read_excel(BytesIO(excel_data))
