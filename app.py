@@ -30,7 +30,7 @@ data['gender'] = label_encoder.fit_transform(data['gender'])
 data['sleeve_length'] = label_encoder.fit_transform(data['sleeve_length'])
 
 # Convert data to numpy arrays
-X = np.array(image_data)
+X = np.array(data['filename'])
 y_gender = np.array(data['gender'])
 y_sleeve_length = np.array(data['sleeve_length'])
 
