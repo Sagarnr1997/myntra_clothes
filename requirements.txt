@@ -4,4 +4,4 @@ numpy
 joblib
 tensorflow
 keras
-sklearn==0.0.post12
+scikit-learn
