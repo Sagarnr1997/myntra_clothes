@@ -1,6 +1,6 @@
-streamlit==0.89.0
-Pillow==8.4.0
-numpy==1.21.5
-joblib==1.3.2
-tensorflow==2.16.1
-keras>=3.0.0
+streamlit
+Pillow
+numpy
+joblib
+tensorflow
+keras
