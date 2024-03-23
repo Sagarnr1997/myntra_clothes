@@ -22,7 +22,7 @@ def get_data():
     excel_data = response.content
     return pd.read_excel(BytesIO(excel_data))
 
-data = get_data()
+data = pd.read_csv("myntra_dataset.csv")
 
 # Preprocess images
 data['filename'] = data['filename'].apply(lambda x: os.path.join(r'https://github.com/Sagarnr1997/myntra_clothes/tree/main/Myntra_cloth_images', x))
