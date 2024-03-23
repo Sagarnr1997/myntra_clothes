@@ -24,14 +24,6 @@ def get_data():
 
 data = pd.read_csv("myntra_dataset.csv")
 
-# Preprocess images
-data['filename'] = data['filename'].apply(lambda x: os.path.join(r'https://github.com/Sagarnr1997/myntra_clothes/tree/main/Myntra_cloth_images', x))
-image_data = []
-for filename in data["filename"]:
-    img = load_img(filename, target_size=(224, 224))  # Assuming image size is 224x224
-    img_array = img_to_array(img) / 255.0  # Normalize pixel values
-    image_data.append(img_array)
-
 # Preprocess labels
 label_encoder = LabelEncoder()
 data['gender'] = label_encoder.fit_transform(data['gender'])
