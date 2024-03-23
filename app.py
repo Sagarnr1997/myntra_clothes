@@ -2,6 +2,7 @@ import streamlit as st
 import pickle
 import numpy as np
 from PIL import Image
+import joblib
 
     
 
@@ -28,8 +29,8 @@ def predict(image, model1, model2):
     return gender, sleeve_type
 
 # Load your pickle files
-model1 = load_model('model1.pkl')
-model2 = load_model('model2.pkl')
+model1 = joblib.load('model1.pkl')
+model2 = joblib.load('model2.pkl')
 
 # Streamlit UI
 st.title('Image Upload and Prediction')
