@@ -15,7 +15,7 @@ from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
 data = pd.read_csv("myntra_dataset.csv")
 
 # Preprocess images
-data['filename'] = data['filename'].apply(lambda x: os.path.join('C:/Users/nidhi/Desktop/Myntra_cloth_images', x))
+data['filename'] = data['filename'].apply(lambda x: os.path.join('https://github.com/Sagarnr1997/myntra_clothes/tree/main/Myntra_cloth_images', x))
 image_data = []
 for filename in data["filename"]:
     img = load_img(filename, target_size=(224, 224))  # Assuming image size is 224x224
