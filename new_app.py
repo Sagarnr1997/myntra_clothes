@@ -44,8 +44,8 @@ if uploaded_file is not None:
 
     # Perform prediction if user uploads an image
     if uploaded_file is not None:
-    image = Image.open(uploaded_file)
-    st.image(image, caption='Uploaded Image', use_column_width=True)
+        image = Image.open(uploaded_file)
+        st.image(image, caption='Uploaded Image', use_column_width=True)
 
     # Perform prediction if user uploads an image
     if st.button('Predict'):
