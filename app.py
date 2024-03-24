@@ -14,13 +14,21 @@ from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
 
 data = pd.read_csv("myntra_dataset.csv")
 
+# Preprocess images
+data['filename'] = data['filename'].apply(lambda x: os.path.join('C:/Users/nidhi/Desktop/Myntra_cloth_images', x))
+image_data = []
+for filename in data["filename"]:
+    img = load_img(filename, target_size=(224, 224))  # Assuming image size is 224x224
+    img_array = img_to_array(img) / 255.0  # Normalize pixel values
+    image_data.append(img_array)
+
 # Preprocess labels
 label_encoder = LabelEncoder()
 data['gender'] = label_encoder.fit_transform(data['gender'])
 data['sleeve_length'] = label_encoder.fit_transform(data['sleeve_length'])
 
 # Convert data to numpy arrays
-X = np.array(data['filename'])
+X = np.array(image_data)
 y_gender = np.array(data['gender'])
 y_sleeve_length = np.array(data['sleeve_length'])
 
