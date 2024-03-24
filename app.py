@@ -87,7 +87,8 @@ if uploaded_file is not None:
         # For now, let's convert it to a numpy array
         image_resized = image.resize((224, 224))
         image_np = np.array(image_resized)
-        image_np = np.expand_dims(image_np, axis=0) 
+        image_np = image_np / 255.0  # Normalize the pixel values to [0, 1]
+        image_np = np.expand_dims(image_np, axis=0)  # Add batch dimension
 
         # Make predictions
         gender, sleeve_type = predict(image_np, model1, model2)
