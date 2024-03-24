@@ -61,4 +61,3 @@ if uploaded_file is not None:
             st.write('Sleeve Type Prediction:', sleeve_type)
         else:
             st.write('Error loading one or more models. Please check your model files and try again.')
-By adding these checks, you ensure that your application doesn't cra
