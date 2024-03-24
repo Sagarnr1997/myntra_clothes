@@ -14,13 +14,7 @@ from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
 
 data = pd.read_csv("myntra_dataset.csv")
 
-# Preprocess images
-data['filename'] = data['filename'].apply(lambda x: os.path.join('https://github.com/Sagarnr1997/myntra_clothes/tree/main/Myntra_cloth_images', x))
-image_data = []
-for filename in data["filename"]:
-    img = load_img(filename, target_size=(224, 224))  # Assuming image size is 224x224
-    img_array = img_to_array(img) / 255.0  # Normalize pixel values
-    image_data.append(img_array)
+
 
 # Preprocess labels
 label_encoder = LabelEncoder()
@@ -28,7 +22,7 @@ data['gender'] = label_encoder.fit_transform(data['gender'])
 data['sleeve_length'] = label_encoder.fit_transform(data['sleeve_length'])
 
 # Convert data to numpy arrays
-X = np.array(image_data)
+X = np.array(data['filename')
 y_gender = np.array(data['gender'])
 y_sleeve_length = np.array(data['sleeve_length'])
 
@@ -91,7 +85,9 @@ if uploaded_file is not None:
     if st.button('Predict'):
         # Preprocess the image as per your model requirements
         # For now, let's convert it to a numpy array
-        image_np = np.array(image)
+        image_resized = image.resize((224, 224))
+        image_np = np.array(image_resized)
+        image_np = np.expand_dims(image_np, axis=0) 
 
         # Make predictions
         gender, sleeve_type = predict(image_np, model1, model2)
