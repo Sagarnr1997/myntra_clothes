@@ -26,6 +26,8 @@ X = np.array(data['filename'])
 y_gender = np.array(data['gender'])
 y_sleeve_length = np.array(data['sleeve_length'])
 
+
+# Define and compile models
 model1 = Sequential([
     Conv2D(32, (3, 3), activation='relu', input_shape=(224, 224, 3)),
     MaxPooling2D((2, 2)),
@@ -35,8 +37,8 @@ model1 = Sequential([
     MaxPooling2D((2, 2)),
     Flatten(),
     Dense(128, activation='relu'),
-    Dense(1, activation='softmax'),  # Output for gender (2 classes: male, female)
-    Dense(1, activation='softmax')])
+    Dense(1, activation='softmax')  # Output for gender (2 classes: male, female)
+])
 
 model2 = Sequential([
     Conv2D(32, (3, 3), activation='relu', input_shape=(224, 224, 3)),
@@ -47,8 +49,7 @@ model2 = Sequential([
     MaxPooling2D((2, 2)),
     Flatten(),
     Dense(128, activation='relu'),
-    Dense(1, activation='softmax'),  # Output for gender (2 classes: male, female)
-    Dense(1, activation='softmax')
+    Dense(1, activation='softmax')  # Output for gender (2 classes: male, female)
 ])
 
 model1.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
