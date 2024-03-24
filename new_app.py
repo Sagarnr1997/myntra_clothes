@@ -12,10 +12,6 @@ def load_model(filename):
         print("Error loading file:", e)
         return None
 
-joblib.dump(model1, 'model1.joblib')
-joblib.dump(model2, 'model2.joblib')
-
-
 # Function to make predictions using the loaded models
 def predict(image, model1, model2):
     # Your prediction logic here
@@ -29,8 +25,8 @@ def predict(image, model1, model2):
     return gender, sleeve_type
 
 # Load your pickle files
-model1 = load_model('model1.joblib')
-model2 = load_model('model2.joblib')
+model1 = load_model('model1.pkl')
+model2 = load_model('model2.pkl')
 
 # Streamlit UI
 st.title('Image Upload and Prediction')
