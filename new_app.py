@@ -4,16 +4,16 @@ import numpy as np
 from PIL import Image
 import joblib
 
-    
-
 def load_model(filename):
     try:
-        with open(filename, 'rb') as f:
-            model = pickle.load(f)
+        model = joblib.load(filename)
         return model
     except Exception as e:
-        print("Error loading pickle file:", e)
+        print("Error loading file:", e)
         return None
+
+joblib.dump(model1, 'model1.joblib')
+joblib.dump(model2, 'model2.joblib')
 
 
 # Function to make predictions using the loaded models
@@ -29,8 +29,8 @@ def predict(image, model1, model2):
     return gender, sleeve_type
 
 # Load your pickle files
-model1 = load_model('model1.pkl')
-model2 = load_model('model2.pkl')
+model1 = load_model('model1.joblib')
+model2 = load_model('model2.joblib')
 
 # Streamlit UI
 st.title('Image Upload and Prediction')
