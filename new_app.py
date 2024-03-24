@@ -43,13 +43,22 @@ if uploaded_file is not None:
     st.image(image, caption='Uploaded Image', use_column_width=True)
 
     # Perform prediction if user uploads an image
+    if uploaded_file is not None:
+    image = Image.open(uploaded_file)
+    st.image(image, caption='Uploaded Image', use_column_width=True)
+
+    # Perform prediction if user uploads an image
     if st.button('Predict'):
-        # Preprocess the image as per your model requirements
-        # For now, let's convert it to a numpy array
-        image_np = np.array(image)
+        if model1 is not None and model2 is not None:
+            # Preprocess the image as per your model requirements
+            # For now, let's convert it to a numpy array
+            image_np = np.array(image)
 
-        # Make predictions
-        gender, sleeve_type = predict(image_np, model1, model2)
+            # Make predictions
+            gender, sleeve_type = predict(image_np, model1, model2)
 
-        st.write('Gender Prediction:', gender)
-        st.write('Sleeve Type Prediction:', sleeve_type)
+            st.write('Gender Prediction:', gender)
+            st.write('Sleeve Type Prediction:', sleeve_type)
+        else:
+            st.write('Error loading one or more models. Please check your model files and try again.')
+By adding these checks, you ensure that your application doesn't cra
